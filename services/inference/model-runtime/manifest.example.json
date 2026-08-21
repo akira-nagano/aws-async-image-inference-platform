@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "catalog": {
+      "modelDirectory": "dinov2-small",
+      "catalogIndex": "catalog-index.json",
+      "preparation": [
+        "mise exec -- python scripts/fetch-dinov2-model.py",
+        "mise exec -- python scripts/build-product-catalog.py <catalog-source.json>"
+      ]
+    },
+    "real": {
+      "modelVersion": "replace-me",
+      "fileName": "model.bin",
+      "sizeBytes": 3865470566,
+      "sha256": "replace-me",
+      "framework": "unknown",
+      "runtimeVersion": "unknown"
+    }
+  },
+  "notes": "Do not commit model weights, generated indexes, or catalog images."
+}

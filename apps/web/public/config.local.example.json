@@ -1,0 +1,11 @@
+{
+  "region": "ap-northeast-1",
+  "apiBaseUrl": "http://localhost:4566/execute-api/<api-id>/$default/api",
+  "userPoolId": "<floci-user-pool-id>",
+  "userPoolClientId": "<floci-client-id>",
+  "authMode": "direct",
+  "cognitoEndpoint": "http://localhost:4566",
+  "localAuthBypass": true,
+  "pollIntervalMs": 1000,
+  "maxUploadBytes": 5242880
+}

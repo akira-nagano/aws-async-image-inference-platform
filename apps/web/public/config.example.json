@@ -1,0 +1,13 @@
+{
+  "region": "ap-northeast-1",
+  "apiBaseUrl": "/api",
+  "userPoolId": "ap-northeast-1_example",
+  "userPoolClientId": "example",
+  "authMode": "managed-login",
+  "cognitoManagedLoginBaseUrl": "https://inference-dev-123456789012.auth.ap-northeast-1.amazoncognito.com",
+  "oauthRedirectUri": "https://d111111abcdef8.cloudfront.net/",
+  "cognitoEndpoint": null,
+  "localAuthBypass": false,
+  "pollIntervalMs": 3000,
+  "maxUploadBytes": 5242880
+}

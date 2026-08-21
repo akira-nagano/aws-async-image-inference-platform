@@ -1,0 +1,55 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3
+        with:
+          version: 2026.7.0
+          install: true
+          cache: true
+      - name: Install locked dependencies
+        run: |
+          bun install --frozen-lockfile
+          python -m pip install -r services/inference/requirements-dev.txt
+      - name: Audit Bun dependencies
+        run: bun audit --audit-level=high
+      - run: mise run check
+      - name: Build inference container with stub model
+        run: docker build -t inference-stub services/inference
+      - name: Scan inference container
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: inference-stub
+          format: table
+          exit-code: "1"
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+
+  floci-integration:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3
+        with:
+          version: 2026.7.0
+          install: true
+          cache: true
+      - name: Install locked dependencies
+        run: |
+          bun install --frozen-lockfile
+          python -m pip install -r services/inference/requirements-dev.txt
+      - name: Run the complete Floci integration suite
+        run: mise run e2e-local

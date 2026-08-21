@@ -1,0 +1,76 @@
+min_version = "2026.7.0"
+
+[tools]
+bun = "1.3.14"
+node = "22"
+"pipx:awscli" = "1.45.53"
+python = "3.12"
+ty = "0.0.63"
+uv = "0.11.26"
+
+[env]
+_.path = ["{{config_root}}/scripts"]
+_.python.venv = { path = ".venv", create = true }
+
+[tasks.install]
+description = "Install Bun and Python dependencies"
+run = [
+  "bun install",
+  "python -m pip install -r services/inference/requirements-dev.txt",
+]
+
+[tasks.format]
+description = "Format JavaScript, TypeScript, JSON, CSS, and HTML with Oxfmt"
+run = "bun run format"
+
+[tasks.check]
+description = "Run the complete local validation suite"
+run = [
+  "bun run format:check",
+  "bun run lint",
+  "python -m ruff check --extend-select ANN001,ANN002,ANN003,ANN201,ANN202,ANN204,ANN205,ANN206 services/inference local/dev_local.py local/e2e_local.py local/verify-lifecycle.py local/tests scripts/generate-web-config.py scripts/fetch-dinov2-model.py scripts/prepare-abo-catalog.py scripts/build-product-catalog.py scripts/benchmark-product-catalog.py",
+  "bun run typecheck",
+  "ty check --extra-search-path services/inference --extra-search-path local services/inference/app local/dev_local.py local/e2e_local.py local/verify-lifecycle.py scripts/generate-web-config.py scripts/fetch-dinov2-model.py scripts/prepare-abo-catalog.py scripts/build-product-catalog.py scripts/benchmark-product-catalog.py",
+  "bun test apps/web/src services/api/test",
+  "bun run --filter @imgflow/cdk test",
+  "python -m pytest services/inference/tests",
+  "python -m pytest local/tests",
+  "bun run build",
+  "bun run --filter @imgflow/cdk nag",
+]
+
+[tasks.dev-web]
+description = "Start the Vite development server"
+run = "bun run --filter @imgflow/web dev"
+
+[tasks.dev-local]
+description = "Start the Floci-backed development environment and Vite"
+run = "python -m local.dev_local"
+
+[tasks.dev-local-refresh]
+description = "Redeploy backend changes to the Floci development environment"
+run = "python -m local.dev_local --force-deploy --prepare-only"
+
+[tasks.dev-local-down]
+description = "Stop the Floci-backed development environment"
+run = "python ./local/stop-floci.py"
+
+[tasks.floci-logs]
+description = "Follow Floci and Floci UI logs"
+run = "docker compose -f local/compose.yaml --profile dev logs -f floci floci-ui"
+
+[tasks.e2e-local]
+description = "Run the complete Floci integration suite and stop the environment"
+run = "python -m local.e2e_local"
+
+[tasks.deploy-dev]
+description = "Deploy the catalog-profile CDK stack to the AWS development environment"
+run = "bun run cdk:deploy:dev"
+
+[tasks.deploy-web]
+description = "Build and deploy the web application"
+run = "bun run ./scripts/deploy-web.ts"
+
+[tasks.clean]
+description = "Remove generated local build and test artifacts"
+run = "python scripts/clean.py"

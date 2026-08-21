@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "name": "Your product catalog",
+    "license": "Confirm before use"
+  },
+  "products": [
+    {
+      "productCode": "MODEL-001",
+      "productName": "Example product",
+      "brand": "Example brand",
+      "referenceImages": [
+        "images/MODEL-001/front.jpg",
+        "images/MODEL-001/side.jpg"
+      ],
+      "queryImages": [
+        "images/MODEL-001/query.jpg"
+      ]
+    }
+  ]
+}

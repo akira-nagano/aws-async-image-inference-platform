@@ -1,0 +1,5 @@
+# Install the CPU-only torch and torchvision wheels from
+# https://download.pytorch.org/whl/cpu first.
+numpy==2.5.1
+safetensors==0.8.0
+transformers==5.14.1

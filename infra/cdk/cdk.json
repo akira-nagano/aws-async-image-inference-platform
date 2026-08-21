@@ -1,0 +1,42 @@
+{
+  "app": "node dist/bin/app.js",
+  "watch": {
+    "include": ["**"],
+    "exclude": ["README.md", "cdk*.json", "**/*.d.ts", "**/*.js", "node_modules", "test"]
+  },
+  "context": {
+    "environment": "dev",
+    "tierLimits": {
+      "tier-basic": 1,
+      "tier-standard": 3,
+      "tier-premium": 4
+    },
+    "capacityMode": "shared",
+    "systemConcurrencyLimit": 4,
+    "dailyJobLimits": {
+      "tier-basic": 10,
+      "tier-standard": 30,
+      "tier-premium": 100
+    },
+    "systemDailyJobLimit": 100,
+    "inferenceMemoryMb": 3008,
+    "inferenceTimeoutSeconds": 900,
+    "inferenceModelProfile": "stub",
+    "stubInferenceDelayMs": 5000,
+    "inputRetentionDays": 1,
+    "jobRetentionDays": 30,
+    "maxUploadBytes": 5242880,
+    "local": false,
+    "localAuthBypass": false,
+    "includeEdgeInLocal": false,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/core:validateSnapshotRemovalPolicy": true,
+    "@aws-cdk/core:annotationsInValidationReport": true,
+    "@aws-cdk/core:validateAgainstDefaultRules": true,
+    "@aws-cdk/aws-iam:minimizePolicies": true,
+    "@aws-cdk/aws-s3:createDefaultLoggingPolicy": true,
+    "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true,
+    "@aws-cdk/aws-s3:publicAccessBlockedByDefault": true,
+    "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true
+  }
+}

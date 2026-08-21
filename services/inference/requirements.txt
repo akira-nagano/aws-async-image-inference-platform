@@ -1,0 +1,3 @@
+# boto3 is pinned in the image so local/container behavior does not depend on the runtime-bundled SDK.
+boto3==1.43.54
+Pillow==12.3.0

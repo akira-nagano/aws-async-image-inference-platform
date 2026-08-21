@@ -1,0 +1,6 @@
+[environment]
+python-version = "3.12"
+
+[rules]
+missing-type-argument = "error"
+possibly-unresolved-reference = "warn"

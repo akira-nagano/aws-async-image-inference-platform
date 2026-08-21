@@ -1,0 +1,28 @@
+{
+  "name": "@imgflow/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "bun test test"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "3.1093.0",
+    "@aws-sdk/client-dynamodb": "3.1093.0",
+    "@aws-sdk/client-lambda": "3.1094.0",
+    "@aws-sdk/client-s3": "3.1094.0",
+    "@aws-sdk/client-sfn": "3.1093.0",
+    "@aws-sdk/lib-dynamodb": "3.1093.0",
+    "@aws-sdk/s3-presigned-post": "3.1094.0",
+    "@aws-sdk/util-dynamodb": "3.996.7",
+    "ulid": "2.4.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.162",
+    "@types/node": "22.20.1",
+    "typescript": "7.0.2"
+  }
+}

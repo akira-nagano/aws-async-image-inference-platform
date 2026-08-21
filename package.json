@@ -1,0 +1,35 @@
+{
+  "name": "imgflow",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "services/api",
+    "infra/cdk",
+    "tests/integration"
+  ],
+  "scripts": {
+    "build": "bun run --filter @imgflow/api build && bun run --filter @imgflow/web build && bun run --filter @imgflow/cdk build",
+    "typecheck": "bun run --filter @imgflow/api typecheck && bun run --filter @imgflow/web typecheck && bun run --filter @imgflow/cdk typecheck && bun run --filter @imgflow/integration-tests typecheck && bun run --cwd services/api tsc -p ../../scripts/tsconfig.json",
+    "format": "oxfmt apps/web services/api infra/cdk tests/integration scripts/deploy-web.ts scripts/tsconfig.json package.json",
+    "format:check": "oxfmt --check apps/web services/api infra/cdk tests/integration scripts/deploy-web.ts scripts/tsconfig.json package.json",
+    "lint": "oxlint --deny-warnings apps/web services/api infra/cdk tests/integration scripts/deploy-web.ts",
+    "test": "bun test apps/web/src services/api/test && bun run --filter @imgflow/cdk test",
+    "test:integration": "bun test tests/integration/test",
+    "cdk:synth": "bun run --filter @imgflow/cdk synth",
+    "cdk:bootstrap": "bun run --filter @imgflow/cdk bootstrap:aws",
+    "cdk:deploy:dev": "bun run --filter @imgflow/cdk deploy:dev",
+    "cdk:deploy:local": "bun run --filter @imgflow/cdk deploy:local"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.14",
+    "esbuild": "0.25.12",
+    "oxfmt": "0.60.0",
+    "oxlint": "1.75.0"
+  },
+  "engines": {
+    "bun": ">=1.3.14",
+    "node": ">=22"
+  },
+  "packageManager": "bun@1.3.14"
+}

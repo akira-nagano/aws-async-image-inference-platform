@@ -1,0 +1,17 @@
+{
+  "servers": {
+    "semble": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "--",
+        "uvx",
+        "--from",
+        "semble[mcp]==0.4.1",
+        "semble",
+        "--content",
+        "all"
+      ]
+    }
+  }
+}
