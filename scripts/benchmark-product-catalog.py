@@ -8,7 +8,6 @@ import statistics
 import sys
 import time
 from pathlib import Path
-from typing import Any, cast
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 INFERENCE_ROOT = REPOSITORY_ROOT / "services" / "inference"
@@ -37,8 +36,9 @@ class ProcessMemoryCounters(ctypes.Structure):
 def windows_memory_bytes() -> tuple[int, int]:
     counters = ProcessMemoryCounters()
     counters.cb = ctypes.sizeof(counters)
-    kernel32 = cast(Any, ctypes.windll.kernel32)  # type: ignore[attr-defined]
-    psapi = cast(Any, ctypes.windll.psapi)  # type: ignore[attr-defined]
+    windll = getattr(ctypes, "windll")
+    kernel32 = windll.kernel32
+    psapi = windll.psapi
     kernel32.GetCurrentProcess.restype = ctypes.c_void_p
     psapi.GetProcessMemoryInfo.argtypes = [
         ctypes.c_void_p,

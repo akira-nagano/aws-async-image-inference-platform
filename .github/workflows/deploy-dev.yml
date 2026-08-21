@@ -29,17 +29,17 @@ jobs:
       - name: Install locked dependencies
         run: |
           bun install --frozen-lockfile
-          python -m pip install -r services/inference/requirements-dev.txt
+          uv pip install --python "$VIRTUAL_ENV/bin/python" -r services/inference/requirements-dev.txt
       - run: mise run check
       - name: Prepare catalog model assets
         run: |
           python scripts/prepare-abo-catalog.py --accept-license --products 30
           python scripts/fetch-dinov2-model.py
-          python -m pip install \
+          uv pip install --python "$VIRTUAL_ENV/bin/python" \
             --index-url https://download.pytorch.org/whl/cpu \
             "torch==2.13.0+cpu" \
             "torchvision==0.28.0+cpu"
-          python -m pip install -r services/inference/requirements-catalog.txt
+          uv pip install --python "$VIRTUAL_ENV/bin/python" -r services/inference/requirements-catalog.txt
           python scripts/build-product-catalog.py local/data/abo-catalog/catalog-source.json
       - run: mise run deploy-dev
       - name: Generate frontend runtime configuration
