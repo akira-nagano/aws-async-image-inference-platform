@@ -16,7 +16,7 @@ _.python.venv = { path = ".venv", create = true }
 description = "Install Bun and Python dependencies"
 run = [
   "bun install",
-  "python -m pip install -r services/inference/requirements-dev.txt",
+  "uv pip install -r services/inference/requirements-dev.txt",
 ]
 
 [tasks.format]

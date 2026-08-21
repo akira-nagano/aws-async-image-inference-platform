@@ -21,7 +21,7 @@ jobs:
       - name: Install locked dependencies
         run: |
           bun install --frozen-lockfile
-          python -m pip install -r services/inference/requirements-dev.txt
+          uv pip install --python "$VIRTUAL_ENV/bin/python" -r services/inference/requirements-dev.txt
       - name: Audit Bun dependencies
         run: bun audit --audit-level=high
       - run: mise run check
@@ -50,6 +50,6 @@ jobs:
       - name: Install locked dependencies
         run: |
           bun install --frozen-lockfile
-          python -m pip install -r services/inference/requirements-dev.txt
+          uv pip install --python "$VIRTUAL_ENV/bin/python" -r services/inference/requirements-dev.txt
       - name: Run the complete Floci integration suite
         run: mise run e2e-local
